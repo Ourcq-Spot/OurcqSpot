@@ -7,6 +7,8 @@ import java.util.Enumeration;
 
 
 
+
+
 /**
  * Class (and file) to be used to launch the server application.
  */
@@ -26,27 +28,7 @@ public class Main{
     public static void main(String[] args) {
         System.out.println("> main()");
 
-        try {  
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();  
-            while (networkInterfaces.hasMoreElements()) {  
-                NetworkInterface networkInterface = networkInterfaces.nextElement();  
-                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();  
-                while (addresses.hasMoreElements()) {  
-                    InetAddress address = addresses.nextElement();  
-                    if (!address.isLoopbackAddress() && address instanceof Inet4Address) {  
-                        //System.out.println("Local IP Address: " + address.getHostAddress());
-                        ServerHandler.SERVER_HOST = address.getHostAddress();
-                    }  
-                }  
-            }  
-        } catch (SocketException ex) {  
-            System.err.println("["+ex.getClass()+"] " + ex.getMessage());
-        }
-
-        if(args[0] != null) {
-            ServerHandler.SERVER_PORT = Integer.valueOf(args[0]);
-        }
-
+        Main.autoConfig(args);
 
         Main.serverHandler = ServerHandler.getInstance(); // Creates the ServerHandler, which by default initiates the communication with the server on another thread
         
@@ -55,6 +37,36 @@ public class Main{
         // But not exactly sure if we could immediately place "Main.serverHandler.writeToServer(blablabla)"
         // Especially since we don't have the SelectionKey
         // But there has to be a way
+    }
+
+    /**
+     * Broken method. Hehe.
+     */
+    public static void autoConfig(String[] args) {
+        if (args[0] != null) {
+            if (args[1] != null) {
+                ServerHandler.SERVER_HOST = args[0];
+                ServerHandler.SERVER_PORT = Integer.valueOf(args[1]);
+            } else {
+                try {  
+                    Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();  
+                    while (networkInterfaces.hasMoreElements()) {  
+                        NetworkInterface networkInterface = networkInterfaces.nextElement();  
+                        Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();  
+                        while (addresses.hasMoreElements()) {  
+                            InetAddress address = addresses.nextElement();  
+                            if (!address.isLoopbackAddress() && address instanceof Inet4Address) {  
+                                //System.out.println("Local IP Address: " + address.getHostAddress());
+                                ServerHandler.SERVER_HOST = address.getHostAddress();
+                            }  
+                        }  
+                    }  
+                } catch (SocketException ex) {
+                    System.err.println("["+ex.getClass()+"] " + ex.getMessage());
+                }
+                ServerHandler.SERVER_PORT = Integer.valueOf(args[0]);
+            }
+        }
     }
 
 }

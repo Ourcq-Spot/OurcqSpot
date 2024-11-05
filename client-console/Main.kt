@@ -16,21 +16,7 @@ private lateinit var clientHandler: ClientHandler
 fun main(args: Array<String>) {
     println("> main()")
 
-    try {
-        ClientHandler.SERVER_HOST = args[0]
-    } catch (e: IndexOutOfBoundsException) {
-        println("No IP set (args[0])")
-    }
-    try {
-        ClientHandler.SERVER_PORT = args[1].toInt()
-    } catch (e: IndexOutOfBoundsException) {
-        println("No PORT set (args[0])")
-    } catch (e: NumberFormatException) {
-        println("Could not read PORT as an Int")
-    }
-
-    //println(ClientHandler.SERVER_HOST)
-    //println(ClientHandler.SERVER_PORT)
+    autoConfig(args);
 
 
     try {
@@ -56,6 +42,23 @@ fun main(args: Array<String>) {
     
 }
 
+fun autoConfig(args: Array<String>) {
+    try {
+        ClientHandler.SERVER_HOST = args[0]
+    } catch (e: IndexOutOfBoundsException) {
+        println("No IP set manually (args[0])")
+    }
+    try {
+        ClientHandler.SERVER_PORT = args[1].toInt()
+    } catch (e: IndexOutOfBoundsException) {
+        println("No PORT set manually (args[1])")
+    } catch (e: NumberFormatException) {
+        println("Could not read PORT as an Int")
+    }
+
+    //println(ClientHandler.SERVER_HOST)
+    //println(ClientHandler.SERVER_PORT)
+}
 
         /*val scanner = Scanner(System.`in`) // Thing that allows reading in the console
         println("[ENTER THE SERVER'S PUBLIC IP ADRESS]")
