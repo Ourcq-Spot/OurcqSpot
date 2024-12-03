@@ -1,0 +1,992 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/*Menu de navigation*/
+/*.hero{
+    padding: 30px;
+    background: linear-gradient(180deg, #000000, #2E006B, #561C8D); /* Ajustez les couleurs selon le design }*/
+
+
+    
+/* Image de fond */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url('./img/fond.png') no-repeat center center fixed; /* Fond principal */
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Empêche les débordements */
+  font-size: 55px;
+}
+
+
+/* Conteneur de la barre */
+.bar {
+  position: absolute;
+  top: 20px; /* Ajustez la distance du haut */
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(8, 0, 23, 0.8); /* Couleur semi-transparente */
+  border-radius: 25px;
+  margin-bottom: 200px;
+
+}
+
+/* Liens de la barre */
+.bar-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+/* Bouton Contact */
+.hero-btn {
+  background-color: #9713b8;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.hero-btn a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Contenu principal */
+.navbar {
+  position: relative;
+  top: 40%;
+  text-align: center;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 100px;
+  margin-bottom: 3000px;
+}
+
+.navbar h1 {
+  font-size: 7rem;
+  margin-bottom: 35px;
+  font-family: Instrument Serif, sans-serif;
+}
+
+.navbar p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.navbar-btn {
+  background-color: #9713b8;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-bottom: 200px;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 10px 20px;
+}
+
+
+  .c{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+
+
+/* Section 1  équipe */
+#section1 {
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin-top: 50px; /* ! Enlever l'espace avant 'px' */
+  margin-top: 400px; /* !Enlever l'espace avant 'px' */
+  margin-bottom: 400px; /* ! Enlever l'espace avant 'px' */
+}
+
+
+/* Carousel*/
+.carousel {
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 500px;
+  }
+  
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .slide1 {
+    display: flex;
+    width: 100%;
+    margin-left: 50%; width: 100%;
+    margin-left: 50%;
+  }
+   
+  .slide2 {
+    display: flex;
+    width: 100%;
+    margin-left: 50%;
+
+  }
+  .slide3 {
+    display: flex;
+    width: 100%;
+    margin-left: 50%;
+}
+  
+  
+  .slide img {
+    width: 60%; /* Show 3 images at a time */
+    height: auto;
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .carousel-btn.prev {
+    left: 60px;
+  }
+  
+  .carousel-btn.next {
+    right: 60px;
+  }
+
+
+
+
+/*Section Projets */
+#project-section {
+  background-color: #3a005f; /* Couleur violette similaire à votre exemple */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 100px;
+  margin-bottom: 1000px;
+  justify-content: center;
+  border-radius: 65px;
+}
+
+.project-row {
+  display: flex;
+  gap: 20px;
+}
+
+.project-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-card {
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px; /* Largeur uniforme */
+  background-color: #25183E;
+  display: flex;
+  flex-direction: column; /* Assure l'alignement vertical du contenu */
+  justify-content: space-between; /* Espace équilibré entre le contenu */
+  height: 100%; /* Pour que les cartes s'étendent en flexbox */
+  min-height: 450px; /* Hauteur minimale commune à toutes les cartes */
+}
+
+.project-card img {
+  max-width: 60%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.project-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  flex-grow: 1; /* Permet de répartir l'espace disponible */
+}
+
+
+
+/* Section service */
+
+.s {
+  text-align: center;
+  margin-bottom: 750px;
+}
+
+.services-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #000;
+}
+
+/* Conteneur des services */
+.s-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.s3-service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.s3-service:hover {
+  transform: scale(1.1);
+}
+
+/* Style des icônes */
+.icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e9e9e9;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.service-link:focus .icon {
+  background-color: #5a4dff;
+}
+
+.icon img {
+  width: 50%;
+  height: 50%;
+}
+
+.service-label {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Boutons */
+.s-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.s-btn:hover {
+  background-color: #5a4dff;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/*contact*/
+/* Section Contact */
+#contact {
+  background-color: #f9f9f9;
+  padding: 50px 20px;
+  display: flex;
+}
+
+.contact-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.contact-title {
+  background: linear-gradient(135deg, #3a0ca3, #4c007d);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.contact-form {
+  padding: 30px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1px solid #ff8c00;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.form-footer p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.submit-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+      flex-direction: column;
+  }
+}
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------------------------------------------------*/
+
+  /*Header JS des autres pages */
+  .header {
+    position: fixed; /* Fixe le header en haut de la page */
+    top: 0;
+    left: 0;
+    width: 100%; /* Prend toute la largeur de l'écran */
+    background-color: #333; /* Couleur de fond du header */
+    padding: 10px 20px; /* Espacement interne du header */
+    z-index: 1000; /* S'assure que le header reste au-dessus des autres éléments */
+  }
+
+  
+.hero-other-pages{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Empêche les débordements */
+}
+
+.navbar-other-pages{
+  position: absolute;
+  top: 20px; /* Ajustez la distance du haut */
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(8, 0, 23, 0.8); /* Couleur semi-transparente */
+  border-radius: 25px;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ µ/
+
+
+/% Page HISTOIRE      */
+
+
+
+#c-history {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+  gap: 20px; /* Espace entre les colonnes */
+  align-items: center; /* Aligne verticalement le contenu */
+  justify-items: center; /* Centre les éléments horizontalement */
+  text-align: center; /* Centre le texte à l'intérieur des éléments */
+  font-family: Arial, sans-serif; /* Police lisible */
+  padding: 20px; /* Espacement autour du grid */
+}
+
+.left-history p {
+  margin: 5px 0; /* Espacement vertical entre les lignes */
+  font-size: 16px; /* Taille des textes à gauche */
+}
+
+.right-history p {
+  font-weight: bold; /* Accentue "Bénéfice client" */
+  font-size: 18px; /* Taille un peu plus grande */
+  margin-bottom: 10px; /* Espace avec le titre */
+}
+
+.right-history h2 {
+  font-size: 24px; /* Taille pour le titre principal */
+  margin: 0; /* Suppression des marges par défaut */
+  color: #4A4A4A; /* Couleur personnalisée */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ µ/
+
+
+/% Page SERVICES      */
+
+/* Style global pour le layout */
+/* Cible uniquement la page services */
+.services-page main {
+  margin-top: -1000px;
+
+}
+
+.services-page .c-services {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 5%;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 80px); /* Pleine hauteur moins le header */
+}
+
+.services-page .content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.services-page .motto {
+  flex: 1;
+}
+
+.services-page .img-skills {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.services-page .img-skills img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.services-page .c-services > p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 2rem;
+  color: #555;
+  text-align: center;
+}
+
+/* sections réalisations*/
+.container {
+  display: row;  /* Utilisation de Flexbox pour aligner les éléments sur une ligne */
+  justify-content: space-between; /* Espace égal entre les sections */
+  align-items: center;  /* Aligne verticalement les éléments */
+  gap: 20px;  /* Espace entre les éléments */
+  padding: 20px;  /* Espacement autour du conteneur */
+  text-align: center;
+
+}
+
+.client-case {
+  flex: 1; /* Chaque section prend une largeur égale */
+  padding: 10px; /* Espacement interne pour chaque section */
+  box-sizing: border-box; /* Inclut le padding dans les dimensions des divs */
+  display: inline-block;
+}
+
+.case-images img {
+  margin: 0 10px; /* Espacement entre les images */
+}
+
+
+
+
+
+
+
+/* Ajustements pour s'assurer que .features suit correctement */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  background: #fff;
+}
+
+.features h3 {
+  color: #38009E;
+}
+
+.features p {
+  color: #555;
+}
+
+/* Styles globaux pour les boutons */
+button {
+  background: #38009E;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #38009E;
+}
+
+
+/* Ajouter un espace automatique sous le header pour .c-services */
+.page-container {
+  margin-top: calc(var(--header-height, 80px)); 
+}
+
+/* Styles pour .c-services */
+.c-services {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(to bottom, #3a0ca3, #4c007d);
+  color: #fff; /* Texte blanc pour contraste */
+}
+
+.c-services h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.c-services p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.c-services button {
+  background: 38009E;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.c-services button:hover {
+  background: #38009E;
+}
+
+.c-services img {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Section des bénéfices */
+.benefit-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+  gap: 20px; /* Espace entre les colonnes */
+  align-items: center; /* Aligne verticalement le contenu */
+  font-family: Arial, sans-serif; /* Police lisible */
+  
+}
+
+.left-benefits p {
+  margin: 5px 0; /* Espacement vertical entre les lignes */
+  font-size: 16px; /* Taille des textes à gauche */
+}
+
+.right-benefits p {
+  font-weight: bold; /* Accentue "Bénéfice client" */
+  font-size: 18px; /* Taille un peu plus grande */
+  margin-bottom: 10px; /* Espace avec le titre */
+}
+
+.right-benefits h2 {
+  font-size: 24px; /* Taille pour le titre principal */
+  margin: 0; /* Suppression des marges par défaut */
+  color: #4A4A4A; /* Couleur personnalisée */
+}
+
+.benefit-section {
+  padding: 20px; /* Espace autour de l'ensemble de la section */
+  background-color: #f5f5f5; /* Fond léger pour le style */
+  border-radius: 10px; /* Coins arrondis */
+}
+
+
+/* CTA*/
+/* Animation au survol */
+.image {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-in-out; /* Animation fluide */
+}
+
+/* Agrandir l'image au survol */
+.image:hover {
+  transform: scale(1.1); /* L'image s'agrandit */
+  cursor: pointer; /* Change le curseur pour indiquer que l'image est cliquable */
+}
+
+/* Optionnel : ajouter un effet visuel, par exemple, une ombre */
+.image:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+/*Animations*/
+
+/*Process */
+#process {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+  gap: 20px; /* Espace entre les colonnes */
+  align-items: center; /* Aligne verticalement le contenu */
+  justify-items: center; /* Centre les éléments horizontalement */
+  text-align: center; /* Centre le texte à l'intérieur des éléments */
+  font-family: Arial, sans-serif; /* Police lisible */
+  padding: 20px; /* Espacement autour du grid */
+}
+
+.left-process {
+  margin: 5px 0; /* Espacement vertical entre les lignes */
+  font-size: 16px; /* Taille des textes à gauche */
+}
+
+.right-process {
+  font-weight: bold; /* Accentue "Bénéfice client" */
+  font-size: 18px; /* Taille un peu plus grande */
+  margin-bottom: 10px; /* Espace avec le titre */
+}
+
+.right-process h2 {
+  font-size: 24px; /* Taille pour le titre principal */
+  margin: 0; /* Suppression des marges par défaut */
+  color: #4A4A4A; /* Couleur personnalisée */
+}
+
+
+
+
+
+
+/**/
+
+/* Section Contact avec formulaire */
+#contact {
+  background-color: #38009E;
+  padding: 50px 20px;
+  width: 800px;
+  margin-bottom: 460px;
+  margin-top: 460px;
+  margin-left: 180px; /*centrage imparfait*/
+  border-radius: 50px;
+  height: 450px;
+  
+}
+
+.contact-container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 700px;
+  z-index: 1; /* Assure qu'il est au-dessus du fond */
+  transform: translateX(90px); /* Décale vers la droite de 50px */
+  height: 650px;
+  margin left: -100px;
+}
+
+
+.contact-title {
+  background: linear-gradient(135deg, #3a0ca3, #4c007d);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.contact-form {
+  padding: 50px;
+
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1px solid #ff8c00;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.form-footer p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.submit-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+      flex-direction: column;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Footer */
+/* Footer */
+.footer {
+  display: flex;
+  background: linear-gradient(180deg, #000000, #2E006B, #561C8D); /* Dégradé de fond */
+  color: white;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  justify-content: space-between; /* Espacement entre le logo et les autres éléments */
+}
+
+/* Conteneur principal du footer */
+.footer-container {
+  display: flex;
+  align-items: center; /* Aligne les éléments verticalement au centre */
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px; /* Espacement interne du conteneur */
+}
+
+/* Logo */
+.footer-logo {
+  margin-right: 30px; /* Marge à droite du logo pour créer de l'espace avec les colonnes */
+  padding-right: 20px; /* Padding interne pour l'espacement du logo */
+}
+
+/* Colonnes du footer */
+.footer-columns {
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+  flex: 1;
+  margin-left: 30px; /* Marge à gauche pour espacer les colonnes du logo */
+  padding: 0 20px; /* Padding interne autour des colonnes */
+}
+
+/* Chaque colonne (réseaux sociaux, nous suivre, etc.) */
+.footer-column {
+  margin-right: 40px; /* Espacement entre les colonnes */
+}
+
+.footer-column h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.footer-column p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #cccccc;
+}
+
+/* Icônes des réseaux sociaux */
+.social-icons a {
+  margin-right: 15px; /* Espacement entre les icônes de réseaux sociaux */
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #04AA6D; /* Vert clair au survol */
+}
+
+/* Ligne de séparation */
+hr {
+  border: none;
+  border-top: 1px solid #555;
+  margin: 20px 0;
+}
+
+/* Bas du footer */
+.footer-legal {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.footer-legal a {
+  color: #cccccc;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-legal a:hover {
+  text-decoration: underline;
+}

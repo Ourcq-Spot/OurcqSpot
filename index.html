@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Agence Oria</title>
+</head>
+<body>
+
+ <!-- est ce qu'il y a une ligne CSS pour la documentation comme javadoc ? -->
+ <!-- https://www.w3schools.com/css/css3_flexbox_container.asp  
+ https://ishadeed.com/article/spacing-in-css/#types-of-spacing
+ -->
+
+ <!-- Menu de navigation -->
+<!-- passer le code au 3WC validaror-->
+
+
+    <!-- Header sans JS contenant le background-->
+    <header class="hero">
+        <div class="background">
+        <!-- Barre de navigation -->
+        <div class="bar">
+            <div class="logo">
+                <img src="img/logo_oria.png" alt="Logo Oria" width="100">
+            </div>
+            <div class="bar-links">
+                <a href="index.html">Accueil</a>
+                <a href="Histoire.html">Histoire</a>
+                <a href="Equipe.html">Equipe</a>
+                <a href="Projets.html">Projets</a>
+                <a href="Services.html">Services</a>
+            </div>
+            <button class="hero-btn">
+                <label><a href="contact.html">Contactez-nous</a></label>
+            </button>
+        </div>
+
+        <!-- échec 7 
+        <div class="hero-overlay">
+            <div class="moving-letters"></div>
+        </div>-->
+
+
+        <!-- Contenu bandeau principal -->
+        <nav class="navbar">
+            <h1>Concevoir & innover<br> au-delà de l'ordinaire</h1>
+            <p>Chez Oria, nous transformons vos idées en solutions digitales uniques.<br>
+            Avec un design percutant et des technologies innovantes, nous allons au-delà de l'ordinaire pour créer des expériences mémorables. Découvrez comment nous pouvons donner vie à vos ambitions.</p>
+            <button class="navbar-btn">
+                <label>Lancez votre projet</label>
+            </button>
+        </nav>
+    </header>
+</div>
+    
+<!-- Section 1 -->
+<div class="c"> 
+  <section id="section1">
+    <h1>La Dream Team</h1>
+       
+    <div class="carousel">
+        <div class="carousel-track">
+
+            <div class="slide1">
+                <img src="img/Adam.png" width="100" alt="Slide 1">
+                <img src="img/Cyrielle.png" width="100" alt="Slide 2">
+                <img src="img/Juan.png" width="100" alt="Slide 3">
+            </div>
+            <div class="slide2">
+                <img src="img/max.jfif" width="100" alt="Slide 4">
+                <img src="img/Omar.jfif" width="100" alt="Slide 5">
+                <img src="img/Li.jfif" width="100" alt="Slide 6">
+            </div>
+            <div class="slide3">
+                <img src="img/vero.jfif" width="100" alt="Slide 7">
+                <img src="img/virginie.jfif" width="100" alt="Slide 8">
+                <img src="img/David.jfif" width="100" alt="Slide 9">
+            </div>
+        </div>
+        
+        <button class="carousel-btn prev">❮</button>
+        <button class="carousel-btn next">❯</button>
+    </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section id="section2">
+        <h1>Projets</h1>
+        <section id="project-section">
+            <div class="project-row">
+                <div class="project-column">
+                    <div class="project-card">Skyworth<br>
+                        <img src="./img/project1.png" >
+                         <p>Nous avons conçu et développé le site web de Skyworth France pour le lancement de cette nouvelle marque de voiture électrique, en créant une plateforme qui reflète ses valeurs et ambitions pour le marché français.</p>
+                         <button>Voir plus</button>
+                        </div>
+                </div>
+                <div class="project-column">
+                    <div class="project-card">GuessMySong
+                        <img src="./img/project2.png">
+                        <p>Nous avons développé l'application de reconnaissance vocale GuessMySong, permettant d'identifier des chansons en chantant ou fredonnant, avec une expérience utilisateur fluide et intuitive.</p>
+                        <button>Voir plus</button>                    
+                    </div>
+                </div>
+                <div class="project-column">
+                    <div class="project-card">EcoEcho
+                        <img src="./img/project3.png">
+                        <p>Nous avons développé un site web pour promouvoir un événement sur les nouvelles technologies, avec une interface intuitive et attrayante. Ce projet a renforcé nos compétences en design et en collaboration multiculturelle.</p>
+                        <button>Voir plus</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    <!-- Section 3 -->
+    <section id="section3">
+        <div class="section3-content">
+            <h1>Nos Services</h1>
+            <p>Details about services go here.</p>
+        </div>
+    </section>
+</div>
+
+
+<section class="s">
+    <h1 class="s-title">NOS SERVICES</h1>
+    <div class="s-container">
+        <!-- Section3-service Graphisme -->
+        <div class="s-service" id="graphisme">
+            <a href="Services.html" class="service-link">
+                <div class="icon">
+                    <img src="icons/graphisme.png" alt="Graphisme">
+                </div>
+                <p class="service-label">GRAPHISME</p>
+            </a>
+            <button class="service-btn">GRAPHISME &rarr;</button>
+        </div>
+        <!-- Section3-service Impression -->
+        <div class="s3-service">
+            <div class="icon">
+                <img src="icons/impression.png" alt="Impression">
+            </div>
+            <p class="service-label">IMPRESSION</p>
+            <button class="s-btn">CRÉATION LOGOS &rarr;</button>
+        </div>
+        <!-- Section3-service Services Web -->
+        <div class="s3-service">
+            <div class="icon">
+                <img src="icons/services-web.png" alt="Services Web">
+            </div>
+            <p class="service-label">SERVICES WEB</p>
+            <button class="s-btn">CRÉATION LOGOS &rarr;</button>
+        </div>
+        <!-- Section3-service Marquages Publicitaires -->
+        <div class="s3-service">
+            <div class="icon">
+                <img src="icons/publicitaires.png" alt="Marquages Publicitaires">
+            </div>
+            <p class="service-label">MARQUAGES PUBLICITAIRES</p>
+            <button class="s-btn">CHARTE GRAPHIQUE &rarr;</button>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- Note : enlever la section 3 ou rajouter des balises fait sauter la page-->
+
+
+
+
+<script src="script.js"></script>
+<special-footer></special-footer>
+
+
+
+
+</body>
+</html>
