@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
                 //HomeNavGraph(navController = rememberNavController())
             }
         }
-        val ref = true
+        val ref = true // Did you find me?
     }
 
     @Preview(showBackground = true)
