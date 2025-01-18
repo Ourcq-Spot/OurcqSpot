@@ -1,4 +1,3 @@
-//package com.example.nestednavigationbottombardemo
 package com.ourcqspot.client
 
 import android.os.Bundle
@@ -20,6 +19,7 @@ class MainActivity : ComponentActivity() {
                 //HomeNavGraph(navController = rememberNavController())
             }
         }
+        val ref = true
     }
 
     @Preview(showBackground = true)
