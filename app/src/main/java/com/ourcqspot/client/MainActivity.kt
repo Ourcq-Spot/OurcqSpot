@@ -10,7 +10,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.ourcqspot.client.graphs.HomeNavGraph
 import com.ourcqspot.client.graphs.RootNavGraph
-import com.ourcqspot.client.ui.theme.Test_NestedBottomNavBarTheme
+import com.ourcqspot.client.ui.theme.OurcqSpotTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         /* WindowCompat.getInsetsController(window, window.decorView)
             .isAppearanceLightStatusBars = false */
         setContent {
-            Test_NestedBottomNavBarTheme {
+            OurcqSpotTheme {
                 RootNavGraph(navController = rememberNavController())
                 //HomeNavGraph(navController = rememberNavController())
             }
