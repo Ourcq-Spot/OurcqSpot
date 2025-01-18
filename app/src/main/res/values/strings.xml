@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Test_NestedBottomNavBar</string>
+    <string name="logo_ourcqspot_content_description">Ourcq\'Spot</string>
 </resources>
