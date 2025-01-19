@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.TextField
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Icon
@@ -50,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -75,7 +78,9 @@ import com.ourcqspot.client.ui.theme.UnselectedBottomItemColor
 // @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
+    val focusManager = LocalFocusManager.current
     Scaffold (
+        modifier = Modifier.clickable { focusManager.clearFocus() },
         topBar = {
             TopBar(navController = navController)
         },
@@ -114,7 +119,8 @@ fun TopBar(navController: NavHostController) {
         //contentColor = Color(0xff0E2176)
     ) {
         Box (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(horizontal = 5.dp, vertical = 12.5.dp)
         ) {
             Column(
@@ -145,9 +151,13 @@ fun TopBar(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     val searchPlaceholder = "Recherche"
-                    var searchValue by remember { mutableStateOf(searchPlaceholder) }
+                    var searchValue by remember { mutableStateOf("") }
+                    var placeholderAlpha by remember { mutableStateOf(1F) }
+                    //var searchValue by remember { mutableStateOf(searchPlaceholder) }
+                    val focusManager = LocalFocusManager.current
                     Row (
                         modifier = Modifier
+                            .clickable { focusManager.moveFocus(FocusDirection.Next) }
                             .weight(1f)
                             .alpha(.5F)
                             .border(
@@ -168,27 +178,47 @@ fun TopBar(navController: NavHostController) {
                             modifier = Modifier.size(size = 16.6.dp)
                         )
                         Spacer ( modifier = Modifier.width(width = 10.dp) )
-                        val focusManager = LocalFocusManager.current
-                        BasicTextField (
-                            value = searchValue,
-                            onValueChange = { searchValue = it },
-                            textStyle = TextStyle(
+                        Box (
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text (
+                                searchPlaceholder,
                                 fontFamily = NUNITO_FONT,
-                                fontSize = 17.5.sp
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Next
-                            ),
-                            keyboardActions = KeyboardActions (
-                                onNext = {
-                                    focusManager.moveFocus(FocusDirection.Down)
-                                },
-                                //onDone = {}
-                            ),
+                                fontSize = 17.5.sp,
+                                modifier = Modifier.alpha(placeholderAlpha)
+                            )
+                            BasicTextField(
+                                value = searchValue,
+                                onValueChange = { searchValue = it },
+                                textStyle = TextStyle(
+                                    fontFamily = NUNITO_FONT,
+                                    fontSize = 17.5.sp
+                                ),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Search
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        focusManager.clearFocus()
+                                    },
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
+                                    },
+                                    //onDone = {}
+                                ),
 
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .onFocusChanged {
+                                        placeholderAlpha = if ((!it.isFocused) and (searchValue=="")) {
+                                            1F
+                                        } else {
+                                            0F
+                                        }
+                                    }
+                            )
+                        }
                     }
                     Spacer ( modifier = Modifier.width(width = 7.5.dp) )
                     Image (
@@ -197,52 +227,6 @@ fun TopBar(navController: NavHostController) {
                         //tint = Color(0xff0E2176),
                         modifier = Modifier.padding(5.dp)
                     )
-                    //TextField (
-                    /*OutlinedTextField (
-                        value = searchValue,
-                        onValueChange = { searchValue = "" },
-                        textStyle = TextStyle(
-                            fontFamily = NUNITO_FONT,
-                            fontSize = 15.sp
-                        ),
-                        //leadingIcon = { SearchIcon() },
-                        shape = RoundedCornerShape(20.dp),
-                        contentPadding = PaddingValues(),
-                        modifier = Modifier.height(height = 40.dp)
-                        //.padding(vertical = 0.dp)
-                        //placeholder = Text(searchValue),
-
-                    )*/
-                    /*BasicTextField (
-                        value = searchValue,
-                        onValueChange = { searchValue = it },
-                        textStyle = TextStyle(
-                            fontFamily = NUNITO_FONT,
-                            fontSize = 15.sp
-                        ),
-                        leadingIcon = { SearchIcon() },
-                        shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier.height(height = 40.dp)
-                            //.padding(vertical = 0.dp)
-                        //placeholder = Text(searchValue),
-
-                    )*/
-                    /*BasicTextField(
-                        onValueChange = { searchValue = it },
-                        modifier = Modifier,
-                        //visualTransformation = visualTransformation,
-                        interactionSource = searchValue,
-                    ) { innerTextField ->
-                        TextFieldDefaults.DecorationBox(
-                            value = value,
-                            visualTransformation = visualTransformation,
-                            innerTextField = innerTextField,
-                            singleLine = singleLine,
-                            enabled = enabled,
-                            interactionSource = interactionSource,
-                            contentPadding = PaddingValues(0.dp), // this is how you can remove the padding
-                        )
-                    }*/
                 }
             }
         }
