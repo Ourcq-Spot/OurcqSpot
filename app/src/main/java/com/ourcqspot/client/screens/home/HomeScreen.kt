@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,10 +20,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -54,12 +59,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -106,10 +113,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
 @Composable
 fun TopBar(navController: NavHostController) {
-    val screens = BottomBarScreen.SCREENS
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-
     TopAppBar (
         modifier = Modifier
             .statusBarsPadding()
@@ -168,7 +171,6 @@ fun TopBar(navController: NavHostController) {
                                 shape = RoundedCornerShape(50.dp)
                             )
                             .padding(horizontal = 20.dp)
-                            //.width(width = 300.dp)
                             .height(height = 50.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -211,11 +213,12 @@ fun TopBar(navController: NavHostController) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .onFocusChanged {
-                                        placeholderAlpha = if ((!it.isFocused) and (searchValue=="")) {
-                                            1F
-                                        } else {
-                                            0F
-                                        }
+                                        placeholderAlpha =
+                                            if ((!it.isFocused) and (searchValue == "")) {
+                                                1F
+                                            } else {
+                                                0F
+                                            }
                                     }
                             )
                         }
@@ -233,13 +236,14 @@ fun TopBar(navController: NavHostController) {
     }
 }
 
-@Composable
+// TO DO: split code and composable elements like this
+/*@Composable
 fun SearchIcon() {
     Icon(
         painter = painterResource(R.drawable.icon_search),
         contentDescription = ""
     )
-}
+}*/
 
 @Composable
 fun BottomBar(navController: NavHostController) {
@@ -290,19 +294,49 @@ fun RowScope.AddItem(
         itemColor = SelectedBottomItemColor
     }
     BottomNavigationItem(
+        /*modifier = Modifier
+            .fillMaxSize(),*/
         label = {
-            Text(
-                screen.fr_title,
-                color = itemColor,
-                fontFamily = NUNITO_FONT
-            )
+            BoxWithConstraints {
+                Column (
+                    Modifier
+                        .requiredHeight(maxHeight + 10.dp)
+                        .requiredWidth(maxWidth + 24.dp), // Draws outside of the imposed item padding)
+                    Arrangement.Bottom,
+                    Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(unbounded = true),
+                        softWrap = false,
+                        text = screen.fr_title,
+                        color = itemColor,
+                        fontFamily = NUNITO_FONT,
+                        fontSize = 13.3.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
         },
         icon = {
-            Icon(
-                imageVector = screen.icon,
-                contentDescription = "Navigation Icon",
-                tint = itemColor
-            )
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(22.5.dp),
+                    // imageVector = screen.icon,
+                    painter = painterResource(screen.icon_painter_id),
+                    contentDescription = screen.icon_content_description,
+                    tint = itemColor
+                )
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(5.dp)
+                )
+            }
         },
         selected = currentDestination?.hierarchy?.any {
             it.route == screen.route

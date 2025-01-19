@@ -1,13 +1,7 @@
 package com.ourcqspot.client
 
+import android.graphics.drawable.Icon
 import android.util.Log
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import com.ourcqspot.client.graphs.Graph
 
@@ -15,12 +9,15 @@ sealed class BottomBarScreen(
     val route: String,
     val fr_title: String,
     val en_title: String,
-    val icon: ImageVector,
+    val icon_painter_id: Int,
+    val icon_content_description: String,
+    //val icon: Icon,
+    // val icon: @Composable () -> Unit,
     val onClick: (navController: NavHostController?) -> Unit
 ) {
     companion object {
         val SCREENS = listOf(
-            Home,
+            News,
             Agenda,
             Map,
             Points,
@@ -44,11 +41,13 @@ sealed class BottomBarScreen(
         }
     }
 
-    object Home : BottomBarScreen(
-        route = "HOME",
-        fr_title = "Accueil",
-        en_title = "Home",
-        icon = Icons.AutoMirrored.Filled.List, //icon = Icons.AutoMirrored.Filled.List
+    object News : BottomBarScreen(
+        route = "NEWS",
+        fr_title = "Actualités",
+        en_title = "News",
+        icon_painter_id = R.drawable.icon_news,
+        icon_content_description = "Actualités",
+        // icon = Icons.AutoMirrored.Filled.List, //icon = Icons.AutoMirrored.Filled.List
         onClick = fun(navController: NavHostController?) {
             Log.d("hey", "ho1")
             navController?.navigate(Graph.DETAILS)
@@ -60,7 +59,9 @@ sealed class BottomBarScreen(
         route = "AGENDA",
         fr_title = "Agenda",
         en_title = "Agenda",
-        icon = Icons.Default.DateRange,
+        icon_painter_id = R.drawable.icon_agenda,
+        icon_content_description = "Agenda",
+        // icon = Icons.Default.DateRange,
         onClick = {}
     )
 
@@ -68,7 +69,9 @@ sealed class BottomBarScreen(
         route = "MAP",
         fr_title = "Carte",
         en_title = "Map",
-        icon = Icons.Default.LocationOn,
+        icon_painter_id = R.drawable.icon_map,
+        icon_content_description = "Carte",
+        // icon = Icons.Default.LocationOn,
         onClick = {}
     )
 
@@ -77,7 +80,9 @@ sealed class BottomBarScreen(
         route = "POINTS",
         fr_title = "Points",
         en_title = "Points",
-        icon = Icons.Default.Star,
+        icon_painter_id = R.drawable.icon_points,
+        icon_content_description = "Points",
+        // icon = Icons.Default.Star,
         onClick = {}
     )
 
@@ -85,7 +90,13 @@ sealed class BottomBarScreen(
         route = "ACCOUNT",
         fr_title = "Compte",
         en_title = "Account",
-        icon = Icons.Default.AccountCircle,
+        //icon = Icons.Default.AccountCircle,
+        icon_painter_id = R.drawable.icon_account,
+        icon_content_description = "Compte",
+        /* icon = Icon(
+            painter = painterResource(R.drawable.icon_account),
+            contentDescription = this.fr_title
+        ), */
         onClick = {}
     )
 }
