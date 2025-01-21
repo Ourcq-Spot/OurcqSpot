@@ -1,7 +1,9 @@
 package com.ourcqspot.client.screens.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
@@ -68,6 +71,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -261,6 +265,7 @@ Icon(
 )
 }*/
 
+@SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = MainScreensData.getScreensList()
@@ -274,8 +279,19 @@ fun BottomBar(navController: NavHostController) {
             .padding(vertical = 30.dp, horizontal = 27.5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val mainScreens = MainScreensData.getScreensList()
+        val flagOffset by animateIntOffsetAsState(
+            targetValue = when (currentDestination?.route) {
+                mainScreens[0].route -> IntOffset(-140, 0)
+                mainScreens[1].route -> IntOffset(-70, 0)
+                mainScreens[3].route -> IntOffset(70, 0)
+                mainScreens[4].route -> IntOffset(140, 0)
+                else -> IntOffset.Zero
+            }, label = "BottomBar navigation flag [x-offset animation]"
+        )
         Spacer(
             Modifier
+                .offset(flagOffset.x.dp, flagOffset.y.dp) //.offset { flagOffset }
                 .size(width = 40.dp, height = 3.33.dp)
                 .background(
                     Orange1,
@@ -364,7 +380,7 @@ fun RowScope.AddItem(
         } == true,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         onClick = {
-            MainScreensData.lastScreen = screen // YYEYYSYSYYES SLIDING TRANSITION DO WORK!!!
+            MainScreensData.lastScreen = screen
             navController.navigate(screen.route) {
                 popUpTo(navController.graph.findStartDestination().id)
                 launchSingleTop = true
