@@ -1,6 +1,8 @@
 package com.ourcqspot.client.graphs
 
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
@@ -9,8 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.ourcqspot.client.BottomBarScreen
-import com.ourcqspot.client.BottomBarScreen.Companion.checkIfDestinationRouteIsBefore
+import com.ourcqspot.client.MainScreensData
+import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsBefore
+import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsDifferent
+import com.ourcqspot.client.screens.MapScreenContent
 import com.ourcqspot.client.screens.ScreenContent
 
 @Composable
@@ -18,30 +22,42 @@ fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
         route = Graph.HOME,
-        startDestination = BottomBarScreen.Map.route,
+        startDestination = MainScreensData.Map.route,
         enterTransition = {
-            var towardsDirection = AnimatedContentTransitionScope.SlideDirection.Right
             if ( initialState.destination.route?.let {
-                    checkIfDestinationRouteIsBefore(it)
-                } == true) {
-                towardsDirection = AnimatedContentTransitionScope.SlideDirection.Left
+                    checkIfDestinationRouteIsDifferent(it)
+                } == true ) {
+                var towardsDirection = AnimatedContentTransitionScope.SlideDirection.Right
+                if (initialState.destination.route?.let {
+                        checkIfDestinationRouteIsBefore(it)
+                    } == true) {
+                    towardsDirection = AnimatedContentTransitionScope.SlideDirection.Left
+                }
+                slideIntoContainer(
+                    towards = towardsDirection,
+                    animationSpec = tween(700)
+                )
+            } else {
+                EnterTransition.None
             }
-            slideIntoContainer(
-                towards = towardsDirection,
-                animationSpec = tween(700)
-            )
         },
         exitTransition = {
-            var towardsDirection = AnimatedContentTransitionScope.SlideDirection.Right
             if ( initialState.destination.route?.let {
-                    checkIfDestinationRouteIsBefore(it)
-                } == true) {
-                towardsDirection = AnimatedContentTransitionScope.SlideDirection.Left
+                    checkIfDestinationRouteIsDifferent(it)
+                } == true ) {
+                var towardsDirection = AnimatedContentTransitionScope.SlideDirection.Right
+                if ( initialState.destination.route?.let {
+                        checkIfDestinationRouteIsBefore(it)
+                    } == true) {
+                    towardsDirection = AnimatedContentTransitionScope.SlideDirection.Left
+                }
+                slideOutOfContainer(
+                    towards = towardsDirection,
+                    animationSpec = tween(700)
+                )
+            } else {
+                ExitTransition.None
             }
-            slideOutOfContainer(
-                towards = towardsDirection,
-                animationSpec = tween(700)
-            )
         },
         /*popEnterTransition = {
             slideIntoContainer(
@@ -62,36 +78,35 @@ fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
             }*/
         }*/
     ) {
-        composable(route = BottomBarScreen.SCREENS[0].route) {
+        val screens = MainScreensData.getScreensList()
+        //composable(route = MainScreensData.SCREENS[0].route) {
+        composable(route = screens[0].route) {
             ScreenContent (
-                name = BottomBarScreen.SCREENS[0].route,
+                name = screens[0].route,
                 useHypertextStyle = true,
                 onClick = {
                     navController.navigate(Graph.DETAILS)
                 }
             )
         }
-        composable(route = BottomBarScreen.SCREENS[1].route) {
+        composable(route = screens[1].route) {
             ScreenContent(
-                name = BottomBarScreen.SCREENS[1].route,
+                name = screens[1].route,
                 onClick = { }
             )
         }
-        composable(route = BottomBarScreen.SCREENS[2].route) {
+        composable(route = screens[2].route) {
+            MapScreenContent()
+        }
+        composable(route = screens[3].route) {
             ScreenContent(
-                name = BottomBarScreen.SCREENS[2].route,
+                name = screens[3].route,
                 onClick = { }
             )
         }
-        composable(route = BottomBarScreen.SCREENS[3].route) {
+        composable(route = screens[4].route) {
             ScreenContent(
-                name = BottomBarScreen.SCREENS[3].route,
-                onClick = { }
-            )
-        }
-        composable(route = BottomBarScreen.SCREENS[4].route) {
-            ScreenContent(
-                name = BottomBarScreen.SCREENS[4].route,
+                name = screens[4].route,
                 onClick = { }
                 //onClick = BottomBarScreen.SCREENS[4].onClick
             )

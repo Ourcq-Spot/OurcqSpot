@@ -62,5 +62,6 @@ dependencies {
 //    implementation("androidx.compose.material:material:1.4.2")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material)
+    implementation(libs.kotlinx.serialization.json)
 
 }

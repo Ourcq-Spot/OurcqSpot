@@ -1,6 +1,7 @@
 package com.ourcqspot.client.screens.home
 
-import android.widget.Space
+import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,12 +16,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
@@ -40,7 +41,6 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.TextField
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Icon
@@ -48,6 +48,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,7 +60,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,41 +71,49 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.ourcqspot.client.BottomBarScreen
+import com.ourcqspot.client.MainScreensData
 import com.ourcqspot.client.R
 import com.ourcqspot.client.graphs.HomeNavGraph
 import com.ourcqspot.client.ui.theme.NUNITO_FONT
+import com.ourcqspot.client.ui.theme.Orange1
 import com.ourcqspot.client.ui.theme.SelectedBottomItemColor
 import com.ourcqspot.client.ui.theme.UnselectedBottomItemColor
 
-// @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
+    var currentRoute by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(navController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            currentRoute = destination?.route
+        }
+    }
+    val topBarShowFiltersBtn = currentRoute == MainScreensData.Map.route
+//    Log.e("Nav", ">> currentRoute = $currentRoute")
+//    Log.e("Nav", "> MainScreensData.Map.route = ${MainScreensData.Map.route}")
+//    Log.e("Nav", ">> topBarShowFiltersBtn = $topBarShowFiltersBtn")
+
     val focusManager = LocalFocusManager.current
     Scaffold (
         modifier = Modifier.clickable { focusManager.clearFocus() },
-        topBar = {
-            TopBar(navController = navController)
-        },
-        bottomBar = {
-            BottomBar(navController = navController)
-        },
+        topBar = { TopBar(topBarShowFiltersBtn) },
+        bottomBar = { BottomBar(navController = navController) },
         //contentWindowInsets =
     ) { innerPadding ->
-        Column (
-            modifier = Modifier//.padding(innerPadding)
+        Box (
+            modifier = Modifier//.padding(innerPadding).background(color = Color.Yellow)
                 .navigationBarsPadding()
                 .imePadding()
                 .padding(PaddingValues(top = innerPadding.calculateTopPadding()))
-                .fillMaxSize()
-                .background(color = Color.Yellow),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+            //verticalArrangement = Arrangement.Center,
+            //horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             HomeNavGraph(navController = navController)
         }
@@ -112,7 +121,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 }
 
 @Composable
-fun TopBar(navController: NavHostController) {
+fun TopBar(showFiltersBtn: Boolean = false) {
     TopAppBar (
         modifier = Modifier
             .statusBarsPadding()
@@ -137,8 +146,6 @@ fun TopBar(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 7.5.dp)
-                        //.background(color = Color(0xffff0000))
-                        //.fillMaxSize()
                 ) {
                     Image(
                         painter = painterResource(R.drawable.logo_ourcqspot),
@@ -147,7 +154,7 @@ fun TopBar(navController: NavHostController) {
                     )
                 }
                 Row (
-                    modifier = Modifier//.background(color = Color.Blue)
+                    modifier = Modifier
                         .padding(vertical = 7.5.dp)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -156,7 +163,6 @@ fun TopBar(navController: NavHostController) {
                     val searchPlaceholder = "Recherche"
                     var searchValue by remember { mutableStateOf("") }
                     var placeholderAlpha by remember { mutableStateOf(1F) }
-                    //var searchValue by remember { mutableStateOf(searchPlaceholder) }
                     val focusManager = LocalFocusManager.current
                     Row (
                         modifier = Modifier
@@ -176,7 +182,7 @@ fun TopBar(navController: NavHostController) {
                     ) {
                         Icon (
                             painter = painterResource(R.drawable.icon_search),
-                            contentDescription = "",
+                            contentDescription = "Search : ",
                             modifier = Modifier.size(size = 16.6.dp)
                         )
                         Spacer ( modifier = Modifier.width(width = 10.dp) )
@@ -223,13 +229,23 @@ fun TopBar(navController: NavHostController) {
                             )
                         }
                     }
-                    Spacer ( modifier = Modifier.width(width = 7.5.dp) )
-                    Image (
-                        painter = painterResource(R.drawable.icon_filters),
-                        contentDescription = "",
-                        //tint = Color(0xff0E2176),
-                        modifier = Modifier.padding(5.dp)
-                    )
+                    // if (showFiltersBtn) {
+                    AnimatedVisibility(showFiltersBtn) {
+                        Row (
+                            Modifier
+                                .fillMaxHeight(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Spacer(Modifier.width(6.66.dp))
+                            Image(
+                                painter = painterResource(R.drawable.icon_filters),
+                                contentDescription = "Open/close filters",
+                                //tint = Color(0xff0E2176),
+                                modifier = Modifier.padding(5.dp)
+                            )
+                        }
+                    }
+                    //}
                 }
             }
         }
@@ -239,33 +255,41 @@ fun TopBar(navController: NavHostController) {
 // TO DO: split code and composable elements like this
 /*@Composable
 fun SearchIcon() {
-    Icon(
-        painter = painterResource(R.drawable.icon_search),
-        contentDescription = ""
-    )
+Icon(
+    painter = painterResource(R.drawable.icon_search),
+    contentDescription = ""
+)
 }*/
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    val screens = BottomBarScreen.SCREENS
+    val screens = MainScreensData.getScreensList()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomAppBar (
-        modifier = Modifier
+    Column (
+        Modifier
             .navigationBarsPadding()
             .imePadding()
-            .padding(vertical = 30.dp, horizontal = 27.5.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .defaultMinSize(minHeight = 75.dp),
-        //contentColor = Color(0xff0E2176)
-        backgroundColor = Color(0xff0E2176)
+            .padding(vertical = 30.dp, horizontal = 27.5.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val bottomBarDestination = screens.any { it.route == currentDestination?.route }
-        if (bottomBarDestination) {
-            BottomNavigation (
-                //modifier = Modifier//.size(width = 300.dp/*, height = 100.dp*/)
-                    //.width(width = 300.dp),
+        Spacer(
+            Modifier
+                .size(width = 40.dp, height = 3.33.dp)
+                .background(
+                    Orange1,
+                    RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
+                )
+        )
+        BottomAppBar (
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .defaultMinSize(minHeight = 75.dp),
+            //contentColor = Color(0xff0E2176)
+            backgroundColor = Color(0xff0E2176)
+        ) {
+            BottomNavigation(
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp
             ) {
@@ -278,12 +302,12 @@ fun BottomBar(navController: NavHostController) {
                 }
             }
         }
-    }
+        }
 }
 
 @Composable
 fun RowScope.AddItem(
-    screen: BottomBarScreen,
+    screen: MainScreensData,
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
@@ -294,8 +318,6 @@ fun RowScope.AddItem(
         itemColor = SelectedBottomItemColor
     }
     BottomNavigationItem(
-        /*modifier = Modifier
-            .fillMaxSize(),*/
         label = {
             BoxWithConstraints {
                 Column (
@@ -310,7 +332,7 @@ fun RowScope.AddItem(
                             .fillMaxWidth()
                             .wrapContentWidth(unbounded = true),
                         softWrap = false,
-                        text = screen.fr_title,
+                        text = screen.frTitle,
                         color = itemColor,
                         fontFamily = NUNITO_FONT,
                         fontSize = 13.3.sp,
@@ -326,9 +348,8 @@ fun RowScope.AddItem(
                 Icon(
                     modifier = Modifier
                         .size(22.5.dp),
-                    // imageVector = screen.icon,
-                    painter = painterResource(screen.icon_painter_id),
-                    contentDescription = screen.icon_content_description,
+                    painter = painterResource(screen.iconPainterId),
+                    contentDescription = screen.iconContentDescription,
                     tint = itemColor
                 )
                 Spacer(
@@ -343,7 +364,7 @@ fun RowScope.AddItem(
         } == true,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         onClick = {
-            BottomBarScreen.lastScreen = screen // YYEYYSYSYYES SLIDING TRANSITION DO WORK!!!
+            MainScreensData.lastScreen = screen // YYEYYSYSYYES SLIDING TRANSITION DO WORK!!!
             navController.navigate(screen.route) {
                 popUpTo(navController.graph.findStartDestination().id)
                 launchSingleTop = true
