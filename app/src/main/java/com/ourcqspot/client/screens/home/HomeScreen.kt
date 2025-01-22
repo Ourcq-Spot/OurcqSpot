@@ -178,7 +178,7 @@ fun TopBar(showFiltersBtn: Boolean = false) {
                                     width = 1.dp,
                                     color = Color(0xff000000)
                                 ),
-                                shape = RoundedCornerShape(50.dp)
+                                shape = RoundedCornerShape(17.5.dp)
                             )
                             .padding(horizontal = 20.dp)
                             .height(height = 50.dp),

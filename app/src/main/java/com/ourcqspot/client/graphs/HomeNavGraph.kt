@@ -14,8 +14,9 @@ import androidx.navigation.navigation
 import com.ourcqspot.client.MainScreensData
 import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsBefore
 import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsDifferent
-import com.ourcqspot.client.screens.MapScreenContent
+import com.ourcqspot.client.screens.home.MapScreenContent
 import com.ourcqspot.client.screens.ScreenContent
+import com.ourcqspot.client.screens.home.NewsScreenContent
 
 @Composable
 fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
@@ -59,35 +60,17 @@ fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
                 ExitTransition.None
             }
         },
-        /*popEnterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(700)
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(700)
-            )
-            /*when (initialState.destination.route) {
-                BottomBarScreen.SCREENS.first().route,
-                BottomBarScreen.SCREENS.last().route
-                    -> towardsDirection = AnimatedContentTransitionScope.SlideDirection.Right
-                //else -> {} // ExitTransition.None
-            }*/
-        }*/
     ) {
         val screens = MainScreensData.getScreensList()
-        //composable(route = MainScreensData.SCREENS[0].route) {
         composable(route = screens[0].route) {
-            ScreenContent (
+            NewsScreenContent()
+            /*ScreenContent (
                 name = screens[0].route,
                 useHypertextStyle = true,
                 onClick = {
                     navController.navigate(Graph.DETAILS)
                 }
-            )
+            )*/
         }
         composable(route = screens[1].route) {
             ScreenContent(
