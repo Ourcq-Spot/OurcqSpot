@@ -16,7 +16,10 @@ import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsB
 import com.ourcqspot.client.MainScreensData.Companion.checkIfDestinationRouteIsDifferent
 import com.ourcqspot.client.screens.home.MapScreenContent
 import com.ourcqspot.client.screens.ScreenContent
+import com.ourcqspot.client.screens.home.AccountScreenContent
+import com.ourcqspot.client.screens.home.AgendaScreenContent
 import com.ourcqspot.client.screens.home.NewsScreenContent
+import com.ourcqspot.client.screens.home.PointsScreenContent
 
 @Composable
 fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
@@ -70,29 +73,20 @@ fun HomeNavGraph(navController: NavHostController = rememberNavController()) {
                 onClick = {
                     navController.navigate(Graph.DETAILS)
                 }
+                //onClick = BottomBarScreen.SCREENS[0].onClick
             )*/
         }
         composable(route = screens[1].route) {
-            ScreenContent(
-                name = screens[1].route,
-                onClick = { }
-            )
+            AgendaScreenContent()
         }
         composable(route = screens[2].route) {
             MapScreenContent()
         }
         composable(route = screens[3].route) {
-            ScreenContent(
-                name = screens[3].route,
-                onClick = { }
-            )
+            PointsScreenContent()
         }
         composable(route = screens[4].route) {
-            ScreenContent(
-                name = screens[4].route,
-                onClick = { }
-                //onClick = BottomBarScreen.SCREENS[4].onClick
-            )
+            AccountScreenContent()
         }
         detailsNavGraph(navController = navController)
     }
