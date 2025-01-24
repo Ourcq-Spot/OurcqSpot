@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -17,15 +18,19 @@ import com.ourcqspot.client.R
 import com.ourcqspot.client.ui.theme.NUNITO_FONT
 
 // TO DO: change this mess
-var listImgRessources = listOf(
-    R.drawable.bassin_de_la_villette_1,
-    R.drawable.parc_de_la_villette_1,
-    R.drawable.parcours_1,
-    R.drawable.parc_de_la_villette_1,
-    R.drawable.parcours_1,
-    R.drawable.parcours_2,
-    R.drawable.bassin_de_la_villette_1,
-)
+var listImgRessources = getCompleteListImgRessources()
+
+fun getCompleteListImgRessources(): List<Int> {
+    return listOf(
+        R.drawable.bassin_de_la_villette_1,
+        R.drawable.parc_de_la_villette_1,
+        R.drawable.parcours_1,
+        R.drawable.parc_de_la_villette_1,
+        R.drawable.parcours_1,
+        R.drawable.parcours_2,
+        R.drawable.bassin_de_la_villette_1,
+    )
+}
 
 @Composable
 fun NewsScreenContent() {
@@ -181,6 +186,9 @@ fun Carrousel(items: List<String>, backgroundColor: Color, type: String = "1") {
                         modifier = Modifier.fillMaxSize()
                     )
                     listImgRessources = listImgRessources.slice(1 until listImgRessources.size)
+                    if (listImgRessources.size<1) {
+                        listImgRessources = getCompleteListImgRessources()
+                    }
                     Box(
                         Modifier
                             .fillMaxWidth()
@@ -232,7 +240,7 @@ fun NewsScreenContent() {
             Modifier
                 .padding(15.dp)
                 .fillMaxSize()
-                .background(Color.Green)
+                .background(Color(0x8844CCAA))
         ) {
 
         }
