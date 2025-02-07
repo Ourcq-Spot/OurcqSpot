@@ -1,3 +1,5 @@
+val MAPTILER_API_KEY: String = "9zzN7nvsweC0cL7QY6k9"
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,8 +18,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // buildConfigField("String", "MAPTILER_API_KEY", "${MAPTILER_API_KEY}")
+        // resValue("String", "MAPTILER_API_KEY", "")
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -66,5 +74,8 @@ dependencies {
 
 
     implementation(libs.androidx.core.splashscreen)
+
+
+    implementation("org.maplibre.gl:android-sdk:11.5.1")
 
 }
