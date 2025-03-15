@@ -55,7 +55,6 @@ fun AccountScreenContent() {
     }
 }
 
-//@JvmOverloads
 @ExperimentalMaterialApi
 @Composable
 fun ExpandableCard(
