@@ -71,7 +71,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material)
     implementation(libs.kotlinx.serialization.json)
-
+    implementation 'mysql:mysql-connector-java:8.0.33'
 
     implementation(libs.androidx.core.splashscreen)
 
