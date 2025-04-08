@@ -89,5 +89,6 @@ dependencies {
 //
 //    // Plugin Annotation pour ajouter des marqueurs
 //    implementation("org.maplibre.gl:android-plugin-annotation-v9:1.0.0")
+    implementation(libs.play.services.location)
 
 }

@@ -1,6 +1,11 @@
 package com.ourcqspot.client.composables
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,19 +20,45 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.ourcqspot.client.R
 import org.maplibre.android.annotations.Icon
 import org.maplibre.android.annotations.IconFactory
 import org.maplibre.android.maps.MapView
+
+@Composable
+fun RequestLocationPermission(onGranted: () -> Unit) {
+    val context = LocalContext.current
+    val permissionState = rememberLauncherForActivityResult (
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            onGranted()
+        } else {
+            Log.d("PERM", "Permission refusée")
+        }
+    }
+
+    LaunchedEffect (Unit) {
+        val permission = Manifest.permission.ACCESS_FINE_LOCATION
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            permissionState.launch(permission)
+        } else {
+            onGranted()
+        }
+    }
+}
 
 fun buildIconUserPosition(mapView: MapView, context: Context): Icon? {
     val userPosIconDrawable = ResourcesCompat.getDrawable(
