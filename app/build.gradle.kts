@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+/*repositories {
+    mavenCentral()
+}*/
+
 android {
     namespace = "com.ourcqspot.client"
     compileSdk = 35
@@ -35,6 +39,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -75,7 +80,15 @@ dependencies {
 
     implementation(libs.androidx.core.splashscreen)
 
-
     implementation("org.maplibre.gl:android-sdk:11.5.1")
+//    //implementation("org.maplibre.gl:android-sdk:11.5.1")
+//    //implementation("org.maplibre.gl:android-plugin-annotation-v9:1.0.0")
+//
+//    // MapLibre SDK compatible avec le plugin annotations
+//    implementation("org.maplibre.gl:android-sdk:10.0.1")
+//
+//    // Plugin Annotation pour ajouter des marqueurs
+//    implementation("org.maplibre.gl:android-plugin-annotation-v9:1.0.0")
+    implementation(libs.play.services.location)
 
 }
