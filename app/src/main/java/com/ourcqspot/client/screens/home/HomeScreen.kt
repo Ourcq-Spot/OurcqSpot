@@ -84,6 +84,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ourcqspot.client.MainScreensData
 import com.ourcqspot.client.R
 import com.ourcqspot.client.graphs.HomeNavGraph
+import com.ourcqspot.client.ui.theme.Blue1
 import com.ourcqspot.client.ui.theme.NUNITO_FONT
 import com.ourcqspot.client.ui.theme.Orange1
 import com.ourcqspot.client.ui.theme.SelectedBottomItemColor
@@ -303,7 +304,7 @@ fun BottomBar(navController: NavHostController) {
                 .clip(RoundedCornerShape(20.dp))
                 .defaultMinSize(minHeight = 75.dp),
             //contentColor = Color(0xff0E2176)
-            backgroundColor = Color(0xff0E2176)
+            backgroundColor = Blue1
         ) {
             BottomNavigation(
                 backgroundColor = Color.Transparent,

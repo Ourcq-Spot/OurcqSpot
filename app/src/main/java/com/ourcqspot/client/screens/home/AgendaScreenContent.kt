@@ -1,69 +1,110 @@
 package com.ourcqspot.client.screens.home
 
+
+//package com.example.myagenda_v0_0
+
+
+import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
+//import.graphics.Color
+//import androidx.compose.ui.layout.ContentScale
+//import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+//import com.ourcqspot.client.R
+//import com.ourcqspot.client.ui.t androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+//import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+//import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+//import androidx.compose.foundation.verticalScroll
+//import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.clickable
+import androidx.compose.ui.Alignment
+
+
 import android.util.Log
-import android.os.Bundle
-import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import java.time.YearMonth
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.ui.Alignment // Correct import pour 'Alignment'
-import androidx.compose.ui.platform.LocalContext // Correct import pour 'LocalContext'
-import android.widget.Toast // Correct import pour 'Toast'
 import androidx.compose.foundation.lazy.grid.items
+import com.ourcqspot.client.data.Event
+import com.ourcqspot.client.data.EventRepository
+import com.ourcqspot.client.networking.ClientHandler
 
-import androidx.activity.ComponentActivity
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-class MainActivity : ComponentActivity() {
+/*class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AgendaScreenContent()
         }
     }
-}
+}*/
 
 @Composable
 fun AgendaScreenContent() {
-    var selectedEvent by remember { mutableStateOf<String?>(null) }
-
-    MonthNavigator(selectedEvent = selectedEvent, onEventSelected = { event ->
-        selectedEvent = event
-    })
-
-    selectedEvent?.let {
-        showEvent(it)
+    Column {
+        MonthNavigator()
+        val events by EventRepository.selectedEvents
+        Log.d("OLD_PRINT", "EVENTS: $events")
+        EventsList(events = events)
     }
 }
 
 @Composable
-fun MonthNavigator(selectedEvent: String?, onEventSelected: (String) -> Unit) {
+fun EventsList(events: List<Event>) {
+    Column {
+        events.forEach({ event ->
+            EventItem(event)
+        })
+    }
+}
+
+@Composable
+fun EventItem(event: Event) {
+    Row (
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        val label = event.label
+        val spot = event.spot
+        val startDate = event.start_date
+        val endDate = event.end_date
+        Column {
+            Text("Début : $label")
+            Text("Début : $spot")
+        }
+        Column {
+            Text("Début : $startDate")
+            Text("Début : $endDate")
+        }
+    }
+}
+
+@Composable
+fun MonthNavigator() {
     val months = listOf(
-        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
     )
 
-    var currentMonthIndex by remember { mutableStateOf(3) } // Avril (index 3)
+    var currentMonthIndex by remember { mutableStateOf(0) }
 
+    //verticalArrangement = Arrangement.Top
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -99,6 +140,7 @@ fun MonthNavigator(selectedEvent: String?, onEventSelected: (String) -> Unit) {
             }
         }
 
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -108,49 +150,49 @@ fun MonthNavigator(selectedEvent: String?, onEventSelected: (String) -> Unit) {
             }
         }
 
-        DaysGrid(monthIndex = currentMonthIndex, onDayClick = { day ->
-            if (currentMonthIndex == 3 && day == 27) { // Avril = index 3
-                onEventSelected("Journée Portes Ouvertes au Parc de l'Ourcq")
-            }
-        })
+        DaysGrid(currentMonthIndex)
     }
 }
 
+@SuppressLint("NewApi")
 fun getDaysInMonth(monthIndex: Int): List<Int> {
-    val yearMonth = YearMonth.of(2025, monthIndex + 1)
+    val yearMonth = YearMonth.of(2024, monthIndex + 1)
     return (1..yearMonth.lengthOfMonth()).toList()
 }
 
 @Composable
-fun DaysGrid(monthIndex: Int, onDayClick: (Int) -> Unit) {
+fun DaysGrid(monthIndex: Int) {
     val days = getDaysInMonth(monthIndex)
-    val eventDays = listOf(27) // jour avec un événement codé en dur (27 avril)
+    val eventDays = listOf(9, 15, 24, 27) // Jours à souligner en rouge avec la bdd
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(7),
+        columns = GridCells.Fixed(7), // 7 colonnes pour les jours de la semaine
         modifier = Modifier.padding(16.dp)
     ) {
         items(days) { day ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .clickable {
-                        // Appel de la fonction onDayClick pour gérer l'affichage du Toast
-                        onDayClick(day) // Appel à la fonction de gestion du jour
-                    }
+                modifier = Modifier.padding(4.dp)
             ) {
                 Text(
                     text = day.toString(),
                     fontSize = 18.sp,
-                    color = if (eventDays.contains(day)) Color.Red else Color.Black
+                    color = if (eventDays.contains(day)) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Black,
+                    modifier = Modifier.clickable {
+                        val monthStr = (monthIndex + 1).toString().padStart(2, '0')
+                        val dayStr = day.toString().padStart(2, '0')
+                        val dateStr = "2025-$monthStr-$dayStr"
+                        Log.d("CLICK", "Clicked on date $dateStr")
+                        val requestApi_getAllEventsByDate = "3;$dateStr"
+                        ClientHandler.getInstance().requestMessageToServer = requestApi_getAllEventsByDate
+                    },
                 )
                 if (eventDays.contains(day)) {
                     Spacer(
                         modifier = Modifier
                             .height(2.dp)
                             .width(16.dp)
-                            .background(Color.Red)
+                            .background(androidx.compose.ui.graphics.Color.Red)
                     )
                 }
             }
@@ -158,26 +200,7 @@ fun DaysGrid(monthIndex: Int, onDayClick: (Int) -> Unit) {
     }
 }
 
-@Composable
-fun showEvent(event: String) {
-    AlertDialog(
-        onDismissRequest = {},
-        title = { Text("Événement du jour") },
-        text = { Text(event) },
-        confirmButton = {
-            TextButton(onClick = {}) {
-                Text("OK")
-            }
-        }
-    )
-}
 
-@Composable
-fun onDayClick(day: Int) {
-    // Affichage d'un Toast dans un LaunchedEffect pour exécuter un effet secondaire.
-    val context = LocalContext.current
 
-    LaunchedEffect(day) {
-        Toast.makeText(context, "Jour cliqué : $day", Toast.LENGTH_SHORT).show()
-    }
-}
+
+
