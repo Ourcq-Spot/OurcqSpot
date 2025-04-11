@@ -109,6 +109,11 @@ fun MapScreenContent() {
     }
 }*/
 
+
+
+//MapScreenContent est la fonction Composable qui structure l'écran principal de la carte
+//Elle intègre la vue de la carte géolocalisée GeolocatedMapLibreView et le menu de filtres MapFiltersMenu
+
 @Composable
 fun MapScreenContent() {
     Box (
@@ -135,8 +140,10 @@ fun MapScreenContent() {
 }
 
 
-
-
+//
+//GeolocatedMapLibreView est la fonction Composable qui affiche la carte interactive
+//avec la position de l'utilisateur avec la localisation pour mettre à jour
+//la position de l'utilisateur en temps réel et affiche des marqueurs sur la carte
 
 @Composable
 fun GeolocatedMapLibreView() {

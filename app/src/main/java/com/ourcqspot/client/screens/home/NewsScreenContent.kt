@@ -17,7 +17,11 @@ import androidx.compose.ui.unit.sp
 import com.ourcqspot.client.R
 import com.ourcqspot.client.ui.theme.NUNITO_FONT
 
-// TO DO: change this mess
+
+
+
+
+//La fonction GetCompleteListImgRessources donne une liste d'images.
 var listImgRessources = getCompleteListImgRessources()
 
 fun getCompleteListImgRessources(): List<Int> {
@@ -32,6 +36,9 @@ fun getCompleteListImgRessources(): List<Int> {
     )
 }
 
+
+//La fonction NewsscreenContent permet de structurer avec des titres, des onglets, des carrousels
+//et des sections informatives
 @Composable
 fun NewsScreenContent() {
     Column(
@@ -56,7 +63,8 @@ fun NewsScreenContent() {
         // Ajoute un petit espace entre le titre et les onglets
         Spacer(modifier = Modifier.height(8.dp))  // Espace de 8.dp
 
-        // Onglets Lieux les plus appréciés et Lieux à proximité
+        //La fonction TabSection crée une section de 2 onglets
+        //pour naviguer entre les lieux les plus appréciés et les lieux à proximité
         TabSection()
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -76,6 +84,10 @@ fun NewsScreenContent() {
             modifier = Modifier
                 .padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
         )
+
+        //Le carrousel est contenu dans une fonction composable qui prend en paramètres items, type, backgroundColor
+        //listOf : fonction qui crée une liste immuable à partir des éléments fournis
+
         Carrousel(
             items = listOf("Visitez les Buttes-Chaumont", "Explorez les bords du canal", "Découvrez les parcs"),
             backgroundColor = Color.White, // Couleur blanche
@@ -113,6 +125,16 @@ fun NewsScreenContent() {
         }
     }
 }
+
+
+//La fonction TabSection crée une section d'onglets avec TabRow pour contenir les onglets et Tab pour chaque onglet individuel
+
+//Lorsqu'un onglet est sélectionné, son texte change de couleur et l'index de l'onglet sélectionné
+//est mis à jour  pour naviguer associés à chaque onglet
+
+//TabRow est une fonction composable qui crée une rangee d'onglets et place en paramètres l'index
+//de l'onglet sélectionné, la couleur de fon et du contenu de ces derniers
+
 
 @Composable
 fun TabSection() {
