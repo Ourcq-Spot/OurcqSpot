@@ -76,9 +76,12 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material)
     implementation(libs.kotlinx.serialization.json)
-    implementation 'mysql:mysql-connector-java:8.0.33'
+
+    implementation ("mysql:mysql-connector-java:8.0.33")
 
     implementation(libs.androidx.core.splashscreen)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 
     implementation("org.maplibre.gl:android-sdk:11.5.1")
 //    //implementation("org.maplibre.gl:android-sdk:11.5.1")

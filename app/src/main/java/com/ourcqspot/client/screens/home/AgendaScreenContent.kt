@@ -1,55 +1,37 @@
 package com.ourcqspot.client.screens.home
 
-
-//package com.example.myagenda_v0_0
-
-
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
-//import.graphics.Color
-//import androidx.compose.ui.layout.ContentScale
-//import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-//import com.ourcqspot.client.R
-//import com.ourcqspot.client.ui.t androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-//import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-//import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-//import androidx.compose.foundation.verticalScroll
-//import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-//import androidx.compose.uitheme.NUNITO_FONT
-
-
+import androidx.compose.foundation.clickable
+import android.util.Log
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import java.time.YearMonth
-//import androidx.compose.material.icons.filled.ChevronLeft
-//import androidx.compose.material.icons.filled.ChevronRight
-//import androidx.compose.foundation.shape.RoundedCornerShape
-//import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.ui.Alignment // Correct import pour 'Alignment'
+import androidx.compose.ui.platform.LocalContext // Correct import pour 'LocalContext'
+import android.widget.Toast // Correct import pour 'Toast'
 import androidx.compose.foundation.lazy.grid.items
 
+import androidx.activity.ComponentActivity
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,19 +44,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AgendaScreenContent() {
-    MonthNavigator()
+    var selectedEvent by remember { mutableStateOf<String?>(null) }
+
+    MonthNavigator(selectedEvent = selectedEvent, onEventSelected = { event ->
+        selectedEvent = event
+    })
+
+    selectedEvent?.let {
+        showEvent(it)
+    }
 }
 
 @Composable
-fun MonthNavigator() {
+fun MonthNavigator(selectedEvent: String?, onEventSelected: (String) -> Unit) {
     val months = listOf(
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"
     )
 
-    var currentMonthIndex by remember { mutableStateOf(0) }
+    var currentMonthIndex by remember { mutableStateOf(3) } // Avril (index 3)
 
-    //verticalArrangement = Arrangement.Top
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -110,7 +99,6 @@ fun MonthNavigator() {
             }
         }
 
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -120,40 +108,49 @@ fun MonthNavigator() {
             }
         }
 
-        DaysGrid(currentMonthIndex)
+        DaysGrid(monthIndex = currentMonthIndex, onDayClick = { day ->
+            if (currentMonthIndex == 3 && day == 27) { // Avril = index 3
+                onEventSelected("Journée Portes Ouvertes au Parc de l'Ourcq")
+            }
+        })
     }
 }
 
 fun getDaysInMonth(monthIndex: Int): List<Int> {
-    val yearMonth = YearMonth.of(2024, monthIndex + 1)
+    val yearMonth = YearMonth.of(2025, monthIndex + 1)
     return (1..yearMonth.lengthOfMonth()).toList()
 }
 
 @Composable
-fun DaysGrid(monthIndex: Int) {
+fun DaysGrid(monthIndex: Int, onDayClick: (Int) -> Unit) {
     val days = getDaysInMonth(monthIndex)
-    val eventDays = listOf(9, 15, 24, 27) // Jours à souligner en rouge avec la bdd
+    val eventDays = listOf(27) // jour avec un événement codé en dur (27 avril)
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(7), // 7 colonnes pour les jours de la semaine
+        columns = GridCells.Fixed(7),
         modifier = Modifier.padding(16.dp)
     ) {
         items(days) { day ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clickable {
+                        // Appel de la fonction onDayClick pour gérer l'affichage du Toast
+                        onDayClick(day) // Appel à la fonction de gestion du jour
+                    }
             ) {
                 Text(
                     text = day.toString(),
                     fontSize = 18.sp,
-                    color = if (eventDays.contains(day)) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Black
+                    color = if (eventDays.contains(day)) Color.Red else Color.Black
                 )
                 if (eventDays.contains(day)) {
                     Spacer(
                         modifier = Modifier
                             .height(2.dp)
                             .width(16.dp)
-                            .background(androidx.compose.ui.graphics.Color.Red)
+                            .background(Color.Red)
                     )
                 }
             }
@@ -161,7 +158,26 @@ fun DaysGrid(monthIndex: Int) {
     }
 }
 
+@Composable
+fun showEvent(event: String) {
+    AlertDialog(
+        onDismissRequest = {},
+        title = { Text("Événement du jour") },
+        text = { Text(event) },
+        confirmButton = {
+            TextButton(onClick = {}) {
+                Text("OK")
+            }
+        }
+    )
+}
 
+@Composable
+fun onDayClick(day: Int) {
+    // Affichage d'un Toast dans un LaunchedEffect pour exécuter un effet secondaire.
+    val context = LocalContext.current
 
-
-
+    LaunchedEffect(day) {
+        Toast.makeText(context, "Jour cliqué : $day", Toast.LENGTH_SHORT).show()
+    }
+}

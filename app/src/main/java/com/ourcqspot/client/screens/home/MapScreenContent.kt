@@ -97,7 +97,7 @@ fun MapScreenContent() {
                     .align(Alignment.TopEnd)   // Important de le faire ici pour être dans BoxScope
                     .padding(top = 25.dp, bottom = 200.dp),
             )
-            /*ModalBottomSheet(onDismissRequest = { /* Executed when the sheet is dismissed */ }) {
+            /*ModalBottomSheet(onDismissRequest = { /* Executed when the sheet s diismissed */ }) {
                 // Sheet content
                 Text("Ciné 104")
                 Spacer(Modifier.height(10.dp))
