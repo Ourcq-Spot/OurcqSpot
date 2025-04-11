@@ -30,7 +30,8 @@ class ClientHandler private constructor(initClient: Boolean = false) : Runnable 
         private const val DEFAULT_BYTEBUFFER_MESSAGE_LENGTH: Int = 1024
         public var SERVER_HOST: String = "91.175.109.179"
         //public var SERVER_HOST: String = "localhost" //"127.0.0.1"
-        public var SERVER_PORT: Int = 49152
+        public var SERVER_PORT: Int = 49156
+        //public var SERVER_PORT: Int = 49152
         private var _instance: ClientHandler = ClientHandler()
         /**
          * Retrives the ClientHandler object (Singleton in _instance property).
